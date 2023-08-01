@@ -1,0 +1,2 @@
+# Generative Models in Machine Learning 2023
+In this repository you can find the final project and home assignments from Generative Models in Machine Learning course. I only included the results of home assignments due to course policy. If you really want to see the code of home assignments then send an email to vnkalinux@gmail.com, introduce yourself and tell me the reason why you are going to see the soultions.
