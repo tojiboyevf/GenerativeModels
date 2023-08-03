@@ -24,22 +24,8 @@ def show_images(batch, nrow=4):
     plt.figure(figsize=(10, 15))
     plt.imshow(tensor_to_image(torchvision.utils.make_grid(batch, nrow=nrow)))
 
-def CLIP_loss(styles_from_image, styles_from_text, temperature = 1):
-    logits = (styles_from_text @ styles_from_image.T) / temperature
-    images_similarity = styles_from_image @ styles_from_image.T
-    texts_similarity = styles_from_text @ styles_from_text.T
-    targets = F.softmax(
-        (images_similarity + texts_similarity) / 2 * temperature, dim=-1
-    )
-    texts_loss = F.cross_entropy(logits, targets)
-    images_loss = F.cross_entropy(logits.T, targets.T)
-    loss =  -(images_loss + texts_loss) / 2.0
-    return loss.mean()
-
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--loss_type', type=str, default='L1',
-                        help='Loss function')
 parser.add_argument('--num_epochs', type=int, default=3,
                         help='Number of epochs')
 args = parser.parse_args()
@@ -70,10 +56,9 @@ wandb.init(project="stargan-text-encoder")
 
 text_encoder = TextEncoder().to('cuda')
 style_encoder = style_encoder.eval().to('cuda')
-if args.loss_type == 'L1':
-    loss_function = nn.L1Loss()
-elif args.loss_type == 'CLIP':
-    loss_function = CLIP_loss
+
+loss_function = nn.L1Loss()
+
 opt = torch.optim.Adam(text_encoder.parameters())
 
 generator = Generator().to('cuda')
@@ -142,9 +127,8 @@ for epoch in range(args.num_epochs):
         opt.zero_grad()
         loss.backward()
         opt.step()
-        wandb.log({f"{args.loss_type} loss": loss.item()})
-        # print('working')
+        wandb.log({f"l1 loss": loss.item()})
     if (epoch + 1) % 1 == 0:
         sample_images(dataloader, f'epoch{epoch+1}.png')
-    torch.save(text_encoder.state_dict(), f"expr/text_encoder_{args.loss_type.lower()}.pt")
+    torch.save(text_encoder.state_dict(), f"expr/text_encoder.pt")
         

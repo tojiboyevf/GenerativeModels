@@ -1,12 +1,12 @@
 ## Text Guided Image Generation
-This is a final project from Generative Models in Machine Learning by HSE and YSDA. Project description and results are in [presentation](presentation.pdf) 
+This is a final project from Generative Models in Machine Learning course by HSE and YSDA. Project description and results are in [presentation](./presentation.pdf) 
 
 ## Software installation
 Clone the repository:
 
 ```bash
-git clone https://github.com/clovaai/stargan-v2.git
-cd stargan-v2/
+git clone https://github.com/tojiboyevf/GenerativeModels.git
+cd project/
 ```
 
 Install the dependencies:
@@ -32,14 +32,10 @@ bash download.sh wing
 ## Training
 Training with L1 loss:
 ```bash
-python train.py --num_epochs 3 --loss_type L1
-```
-Training with CLIP loss:
-```bash
-python train.py --num_epochs 3 --loss_type CLIP
+python train.py --num_epochs 3
 ```
 
-## Citation
+## Credits
 The code was adapted from  https://github.com/clovaai/stargan-v2.git
 
 ```
