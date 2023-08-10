@@ -6,7 +6,7 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/tojiboyevf/GenerativeModels.git
-cd project/
+cd GenerativeModels/project/
 ```
 
 Install the dependencies:
